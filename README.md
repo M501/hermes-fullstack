@@ -1,78 +1,92 @@
 # Hermes FullStack
 
-> **AI-ассистент одной кнопкой.** Скачал → кликнул → работает.
+> **AI-ассистент на голый Windows одной кнопкой.**
+> Скачал файл → кликнул → пошёл пить кофе → через 15 минут всё работает.
 
-## Быстрый старт (для всех)
+## Установка на чистый Windows
 
-### Вариант 1: Один файл (самый простой)
+### Самый простой способ (для всех)
 
-1. Скачайте `INSTALL-ONE-CLICK.bat` с [GitHub Releases](https://github.com/M501/hermes-fullstack/releases)
+1. Скачайте `INSTALL.bat` с [GitHub Releases](https://github.com/M501/hermes-fullstack/releases)
 2. Дважды кликните
-3. Ждите ~5-10 минут (всё скачается и установится само)
-4. Готово!
+3. Согласитесь с установкой Python/Git/Ollama (окно "Контроль учётных записей")
+4. Подождите ~15 минут
+5. Готово!
 
-### Вариант 2: Через GitHub
+Скрипт **сам** скачает и установит:
+- Python 3.13 (если нет)
+- Git (если нет)
+- Hermes Agent
+- OpenCode Proxy (бесплатные нейросети)
+- Vision Fallback (распознавание картинок)
+- SearXNG (локальный поиск)
+- Ollama + модель qwen3.5:9b (~6.5 GB)
+- Конфигурацию с фиксами
+- Лаунчер на рабочий стол
+
+### Через git clone (для тех, кто умеет)
 
 ```cmd
 git clone https://github.com/M501/hermes-fullstack.git C:\AI\hermes-fullstack
 cd C:\AI\hermes-fullstack
-setup.bat
+powershell -ExecutionPolicy Bypass -File scripts\install-full.ps1
 ```
-
-### Вариант 3: Полный установщик
-
-1. Скачайте архив с [Releases](https://github.com/M501/hermes-fullstack/releases)
-2. Распакуйте в любую папку
-3. Дважды кликните `setup.bat`
 
 ## Что устанавливается
 
-| Компонент | Порт | Описание |
-|-----------|------|----------|
-| **Hermes Agent** | — | AI-ассистент с Telegram, голосовым, памятью |
-| **OpenCode Proxy** | `:9224` | Бесплатные нейросети (MiMo, DeepSeek, Nemotron) |
-| **Vision Fallback** | `:9225` | Распознавание картинок (MiMo → Ollama) |
-| **SearXNG** | `:8888` | Локальный поиск (DDG, Bing, Wikipedia) |
-| **Watchdog** | — | Автозапуск и перезапуск сервисов |
+| Компонент | Порт | Описание | Размер |
+|-----------|------|----------|--------|
+| **Hermes Agent** | — | AI-ассистент с Telegram, голосовым, памятью | ~100 MB |
+| **OpenCode Proxy** | `:9224` | Бесплатные нейросети (MiMo, DeepSeek, Nemotron) | ~10 MB |
+| **Vision Fallback** | `:9225` | Распознавание картинок (MiMo → Ollama) | ~1 MB |
+| **SearXNG** | `:8888` | Локальный поиск (DDG, Bing, Wikipedia) | ~50 MB |
+| **Ollama** | `:11434` | Локальная нейросеть (vision fallback) | ~500 MB |
+| **qwen3.5:9b** | — | Модель для распознавания картинок | ~6.5 GB |
 
-## Что нужно от пользователя
+**Итого: ~7 GB места на диске**
 
-- **Windows 10/11**
-- **Интернет** (для скачивания)
-- **~2 GB места на диске**
-- **Telegram бот** (опционально — создать через @BotFather)
+## Системные требования
+
+- Windows 10/11 (64-bit)
+- Интернет (для скачивания)
+- 4+ GB RAM (для Ollama)
+- GPU (опционально, ускоряет Ollama)
 
 ## После установки
 
-1. **Telegram бот**: Напишите в Telegram [@BotFather](https://t.me/BotFather), создайте бота, скопируйте токен
-2. **Ollama** (для распознавания картинок): Скачайте с [ollama.com](https://ollama.com/download), затем в командной строке:
-   ```
-   ollama pull qwen3.5:9b
-   ```
-3. **Запуск**: Дважды кликните **"Hermes + MiMo.bat"** на рабочем столе
+### Запуск
+Дважды кликните **"Hermes + MiMo.bat"** на рабочем столе.
+
+### Telegram бот
+1. Откройте Telegram, найдите [@BotFather](https://t.me/BotFather)
+2. Отправьте `/newbot`
+3. Следуйте инструкциям, скопируйте токен
+4. Вставьте токен при установке (или отредактируйте `C:\AI\HERMES\.hermes\.env`)
+
+### Голосовой
+Нажмите `Ctrl+B` в Hermes → говорите → Hermes распознаёт русский и английский.
 
 ## Структура
 
 ```
 hermes-fullstack/
-├── INSTALL-ONE-CLICK.bat     ← ОДИН ФАЙЛ ДЛЯ ВСЕХ (скачать и кликнуть)
-├── INSTALL.bat               ← Полный установщик (с проверкой Python/Git)
-├── setup.bat                 ← Тихая установка (для продвинутых)
-├── launchers/
-│   └── Hermes + MiMo.bat    ← Лаунчер на рабочий стол
-├── config-templates/
-│   ├── config.yaml           ← Конфиг Hermes с фиксами
-│   └── .env                  ← Шаблон ключей
-├── vision-fallback/
-│   └── vision_fallback.py    ← Vision proxy (MiMo → Ollama)
-├── watchdog/
-│   └── watchdog.ps1          ← Супервизор сервисов
-├── webstack-config/
-│   └── settings.yml          ← SearXNG конфиг
+├── INSTALL.bat                  ← ОДИН ФАЙЛ ДЛЯ ВСЕХ
 ├── scripts/
-│   ├── setup-searxng.bat     ← Установка SearXNG
-│   ├── install-watchdog.ps1  ← Регистрация watchdog
-│   └── healthcheck.bat       ← Проверка здоровья
+│   ├── install-full.ps1         ← Полный PowerShell-установщик
+│   ├── setup-searxng.bat        ← Доп. установка SearXNG
+│   ├── install-watchdog.ps1     ← Регистрация watchdog
+│   └── healthcheck.bat          ← Проверка здоровья
+├── launchers/
+│   └── Hermes + MiMo.bat       ← Лаунчер (на рабочий стол)
+├── config-templates/
+│   ├── config.yaml              ← Конфиг Hermes с фиксами
+│   └── .env                     ← Шаблон ключей
+├── vision-fallback/
+│   └── vision_fallback.py       ← MiMo → Ollama fallback
+├── watchdog/
+│   └── watchdog.ps1             ← Супервизор сервисов
+├── webstack-config/
+│   └── settings.yml             ← SearXNG конфиг
 └── README.md
 ```
 
@@ -85,38 +99,33 @@ hermes-fullstack/
 :11434 — Ollama (локальные LLM)
 ```
 
-## Что исправлено (по сравнению с чистой установкой)
+## Что исправлено
 
-- **Голосовой**: STT language auto-detect (русский + английский)
+- **Голосовой**: STT language auto-detect (русский + английский, не "en")
 - **Vision**: fallback с MiMo на Ollama при ошибках
-- **Watchdog**: автозапуск + мониторинг всех сервисов
+- **Watchdog**: автозапуск + мониторинг 4 сервисов
 - **Proxy**: reasoning xhigh (максимальное рассуждение)
 - **Поиск**: локальный SearXNG без captchas
 
 ## FAQ
 
-**Q: Скрипт говорит "Python не найден"**
-A: Скрипт сам скачает и установит Python. Просто подождите.
+**Q: Скрипт требует "Контроль учётных записей" (UAC)**
+A: Это нормально — нужно для установки Python/Git/Ollama. Нажмите "Да".
+
+**Q: Ollama не скачивает модель**
+A: Запустите позже: `ollama pull qwen3.5:9b`
 
 **Q: Hermes не запускается**
-A: Попробуйте перезагрузить компьютер после установки.
+A: Перезагрузите компьютер после установки.
 
 **Q: Нет звука в голосовом**
 A: Проверьте настройки микрофона в Windows.
 
-**Q: Картинки не распознаются**
-A: Установите Ollama + `ollama pull qwen3.5:9b`
-
 **Q: Как сменить нейросеть?**
 A: Отредактируйте `C:\AI\hermes-proxy\config.json`
 
-## Системные требования
-
-- Windows 10/11
-- Python 3.13+ (установщик скачает сам)
-- Git (установщик скачает сам)
-- 4+ GB RAM (для Ollama)
-- GPU (опционально, ускоряет Ollama)
+**Q: Где логи установки?**
+A: `C:\AI\logs\` (python-install.log, git-install.log)
 
 ## Лицензия
 
