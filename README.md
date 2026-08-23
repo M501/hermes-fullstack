@@ -101,8 +101,9 @@ hermes-fullstack/
 
 ## Что исправлено
 
+- **Research First**: перед каждым ответом о фактах — обязательный веб-поиск
 - **Голосовой**: STT language auto-detect (русский + английский, не "en")
-- **Vision**: fallback с MiMo на Ollama при ошибках
+- **Vision**: основная модель (MiMo) сама распознаёт изображения, отдельный vision не нужен
 - **Watchdog**: автозапуск + мониторинг 4 сервисов
 - **Proxy**: reasoning xhigh (максимальное рассуждение)
 - **Поиск**: локальный SearXNG без captchas

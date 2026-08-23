@@ -3,6 +3,22 @@
 # Only edit manually for platform tokens (Telegram, Discord) and non-model settings.
 #
 # IMPORTANT: Secrets belong in .env, not here.
+#
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  STACK INFO (для справки)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#
+#  Основная модель: MiMo V2.5 Free (Xiaomi) через OpenCode Proxy :9224
+#  Vision: MiMo V2.5 Free — та же модель что и текстовая. Она же анализирует
+#          изображения, код, скриншоты, документы. Отдельный vision НЕ НУЖЕН.
+#
+#  Порты:
+#    :9224  — OpenCode Proxy (главный мозг, текст + vision + reasoning)
+#    :9225  — Vision Fallback (MiMo → Ollama, только если :9224 недоступен)
+#    :8888  — SearXNG (локальный поиск в интернете)
+#    :11434 — Ollama (локальные модели, fallback для vision)
+#
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 model:
   default: opencode
@@ -34,6 +50,8 @@ providers:
 fallback_providers: []
 toolsets:
 - hermes-cli
+- web
+- file
 max_live_sessions: 16
 agent:
   max_turns: 90
@@ -75,7 +93,7 @@ terminal:
   shell_init_files: []
   auto_source_bashrc: true
   persistent_shell: true
-  working_dir: C:\AI\ecc-final
+  working_dir: C:\\AI\\ecc-final
 web:
   backend: searxng
   search_backend: searxng
@@ -140,6 +158,14 @@ auxiliary:
     api_key: no-key-required
     timeout: 120
     download_timeout: 30
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    #  VISION NOTE:
+    #  Основная модель (MiMo V2.5 Free через :9224) уже распознаёт
+    #  изображения. Вспомогательный vision (:9225) используется ТОЛЬКО
+    #  когда основной прокси недоступен (fallback).
+    #  Вручную вызывать vision_analyze НЕ нужно — основная модель сама
+    #  анализирует любые картинки, скриншоты, документы.
+    # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   web_extract:
     provider: auto
     model: ''
@@ -260,7 +286,7 @@ display:
   turn_completion_explainer: true
   show_cost: false
   skin: default
-  language: en
+  language: ru
   tui_status_indicator: kaomoji
   cli_refresh_interval: 1
   user_message_preview:
@@ -324,9 +350,14 @@ tts:
     device: cpu
   piper:
     voice: en_US-lessac-medium
-# ===== CRITICAL FIX: stt.language = "" =====
-# Default "en" forces English-only recognition.
-# Empty string = auto-detect language per segment (ru + en + any).
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  STT FIX: language = "" (auto-detect)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  Дефолт "en" заставляет Whisper распознавать ТОЛЬКО английскую речь.
+#  Пустая строка = авто-определение языка для каждого сегмента.
+#  Результат: русская речь → русский текст, английская → английский.
+#  НЕ СТАВЬТЕ "en" — ломает русскую речь!
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 stt:
   enabled: true
   provider: local
@@ -384,7 +415,7 @@ delegation:
   max_spawn_depth: 1
   orchestrator_enabled: true
   subagent_auto_approve: false
-prefill_messages_file: ''
+prefill_messages_file: 'C:\AI\HERMES\.hermes\prefill-research-first.md'
 goals:
   max_turns: 20
 skills:
@@ -498,10 +529,3 @@ platforms:
   webhook:
     enabled: true
 plugins:
-  enabled:
-  - web-webstack
-  disabled: []
-  entries:
-    web-webstack:
-      allow_tool_override: false
-_config_version: 37

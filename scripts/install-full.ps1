@@ -332,6 +332,13 @@ if ((Test-Path $cfgSrc) -and (-not (Test-Path "$HermesHome\config.yaml"))) {
     Write-OK "config.yaml установлен"
 }
 
+# Prefill: Research First rule
+$prefillSrc = "$PSScriptRoot\..\config-templates\prefill-research-first.md"
+if (Test-Path $prefillSrc) {
+    Copy-Item $prefillSrc "$HermesHome\prefill-research-first.md" -Force
+    Write-OK "Research First правило установлено"
+}
+
 # .env
 $envSrc = "$PSScriptRoot\..\config-templates\.env"
 if ((Test-Path $envSrc) -and (-not (Test-Path "$HermesHome\.env"))) {
@@ -490,6 +497,10 @@ $checks += @{ Name = "config.yaml"; Status = if ($cfgOk) { "✓ установл
 # .env
 $envOk = Test-Path "$HermesHome\.env"
 $checks += @{ Name = ".env"; Status = if ($envOk) { "✓ установлен" } else { "✗ не найден" } }
+
+# Prefill (Research First)
+$prefillOk = Test-Path "$HermesHome\prefill-research-first.md"
+$checks += @{ Name = "Research First"; Status = if ($prefillOk) { "✓ правило установлено" } else { "⚠ не найден (рекомендуется)" } }
 
 # Ollama
 $ollamaOk = Test-Command 'ollama'
