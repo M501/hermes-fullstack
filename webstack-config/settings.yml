@@ -1,0 +1,89 @@
+# SearXNG settings for Hermes WebStack (local instance).
+# Usage: SEARXNG_SETTINGS_PATH=<this file> python -m searx.webapp
+# NOTE: with use_default_settings: true, a plain "engines:" list is IGNORED
+# for SELECTION (settings_loader merges everything EXCEPT engines from
+# defaults). Selection goes through use_default_settings.engines.keep_only;
+# the "engines:" section below is still merged per-engine (used to UN-disable
+# and tag categories, otherwise bing/mojeek are disabled in defaults).
+use_default_settings:
+  engines:
+    keep_only:
+      - bing
+      - mojeek
+      - duckduckgo
+      - qwant
+      - startpage
+      - brave
+      - duckduckgo_web
+      - wikipedia
+      - wikidata
+      - yahoo
+      - yep
+
+engines:
+  - name: bing
+    disabled: false
+    categories: [general]
+    weight: 0.5          # ok on en, garbage on ru long-tail ("работает как" -> словари); ddg covers ru when alive
+  - name: mojeek
+    disabled: false
+    categories: [general]
+    weight: 0.8
+  - name: duckduckgo
+    disabled: false
+    categories: [general]
+    weight: 2.0          # best ru+en quality; captchas under burst
+  - name: qwant
+    disabled: false
+    categories: [general]
+    weight: 0.2          # SEO-spam domains (.vg/.sy/.gl/.nc/.pl/.sn) on ru queries
+  - name: startpage
+    disabled: false
+    categories: [general]
+    weight: 1.0
+  - name: brave
+    disabled: false
+    categories: [general]
+    weight: 1.0
+  - name: duckduckgo_web
+    disabled: false
+    categories: [general]
+    weight: 1.5          # HTML endpoint: survives when DDG API trips captcha
+  - name: wikipedia
+    disabled: false
+    categories: [general]
+    weight: 1.2          # official API - never captchas, factual anchor
+  - name: wikidata
+    disabled: false
+    categories: [general]
+    weight: 0.8          # official API - never captchas
+  - name: yahoo
+    disabled: false
+    categories: [general]
+    weight: 0.8
+  - name: yep
+    disabled: false
+    categories: [general]
+    weight: 0.8
+
+server:
+  bind_address: "127.0.0.1"
+  port: 8888
+  secret_key: "hermes-webstack-local-only"
+  limiter: false            # no redis, local-only instance
+  public_instance: false
+
+search:
+  formats:
+    - html
+    - json
+  default_lang: "ru"
+  safe_search: 0
+
+ui:
+  default_locale: "ru"
+  theme: simple
+
+outgoing:
+  request_timeout: 5.0
+  max_request_timeout: 8.0

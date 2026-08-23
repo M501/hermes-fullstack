@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+.venv-searx/
+venv/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets
+.env
+*.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# SearXNG source (downloaded, not committed)
+searxng-master/
+
+# Ollama models (managed by ollama)
+*.gguf
+
+# Hermes state
+state/
+*.db
+*.db-wal
+*.db-shm
+
+# Temp
+*.tmp
+*.bak
