@@ -415,7 +415,7 @@ delegation:
   max_spawn_depth: 1
   orchestrator_enabled: true
   subagent_auto_approve: false
-prefill_messages_file: 'C:\AI\HERMES\.hermes\prefill-research-first.md'
+prefill_messages_file: ''
 goals:
   max_turns: 20
 skills:
