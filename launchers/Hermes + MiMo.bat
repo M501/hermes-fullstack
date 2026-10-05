@@ -21,8 +21,8 @@ set "PROXY_DIR=C:\AI\hermes-proxy"
 
 REM --- Resolve other dirs ---
 set "INSTALL_DIR=C:\AI"
-set "WEBSTACK_DIR=%INSTALL_DIR%\ecc-final\webstack"
-set "VISION_DIR=%INSTALL_DIR%\vision-fallback"
+set "WEBSTACK_DIR=%INSTALL_DIR%\Hermes_PROJECTS\webstack"
+set "VISION_DIR=%INSTALL_DIR%\Hermes_PROJECTS\vision-fallback"
 set "OLLAMA_EXE=%LOCALAPPDATA%\Programs\Ollama\ollama.exe"
 set "HERMES_HOME=%INSTALL_DIR%\HERMES\.hermes"
 

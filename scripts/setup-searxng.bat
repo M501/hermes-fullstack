@@ -6,7 +6,7 @@ REM  SearXNG Setup — download + install for Hermes WebStack
 REM  Run once after main setup.bat
 REM ============================================================
 
-set "WEBSTACK_DIR=C:\AI\ecc-final\webstack"
+set "WEBSTACK_DIR=C:\AI\Hermes_PROJECTS\webstack"
 set "SEARX_DIR=%WEBSTACK_DIR%\searxng-master"
 set "SEARX_VENV=%WEBSTACK_DIR%\.venv-searx"
 
